@@ -27,25 +27,24 @@
           console.log(results)
           console.log(results[1])
           let temp_html = '';
-          for (i = 0; i < results.length; i++) {
-            let id = results[i]['id']
-            let title = results[i]['title'];
-            let overview = results[i]['overview'];
-            let vote = results[i]['vote_average']
-            let poster = results[i]['poster_path'];
+
+          results.forEach((result, i) => {
+            let id = result['id']
+            let title = result['title'];
+            let overview = result['overview'];
+            let vote = result['vote_average']
+            let poster = result['poster_path'];
             let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
             temp_html = temp_html + `<div class="movie-content">
                              <img src="${poster_path}" onClick="alert('id: ${id}')" id="movie-poster">
                              <div class="movie-title">${title}</div>
                              <div class="movie-vote">rate : ${vote}</div>
                              <div class="movie-overview">${overview}</div>
-                             </div>`
-          }
+                             </div>`})
           movie_list.innerHTML = temp_html
         })
         .catch(err => console.error(err));
     }
-
 
     const search_movie = () => {
 
@@ -68,24 +67,39 @@
           console.log(results)
           console.log(results[1])
           let temp_html = '';
-          for (i = 0; i < results.length; i++) {
-            let id = results[i]['id']
-            let title = results[i]['title'];
-            let overview = results[i]['overview'];
-            let vote = results[i]['vote_average']
-            let poster = results[i]['poster_path'];
+
+          results.forEach((result, i) => {
+            let id = result['id']
+            let title = result['title'];
+            let overview = result['overview'];
+            let vote = result['vote_average']
+            let poster = result['poster_path'];
             let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
             temp_html = temp_html + `<div class="movie-content">
                              <img src="${poster_path}" onClick="alert('id: ${id}')" id="movie-poster">
                              <div class="movie-title">${title}</div>
                              <div class="movie-vote">rate : ${vote}</div>
                              <div class="movie-overview">${overview}</div>
-                             </div>`
-          }
+                             </div>`})
           movie_list.innerHTML = temp_html
         })
         .catch(err => console.error(err));
     }
+
+    const sckw = document.querySelector('#keyword')
+
+    sckw.addEventListener('keyup', function (event) {
+      console.log(event.keycode)
+      if (event.keycode === 13) {
+        search_movie();
+      }
+    })
+    // const on_key_up = (e) => {
+    //   console.log(e)
+    //   if (e.key === 'Enter') {
+    //     search_movie();
+    //   }
+    // }
 
 
   </script>
@@ -94,20 +108,41 @@
 <body>
   <header>
     <nav id="nav">
-      <h1>환장함피디아</h1>
+      <div class="transparent">
+        <a href="./index.html">환장함피디아</a><br>
+      </div>
       <input id="keyword" type="text" placeholder="검색하기">
-      <button onclick="search_movie()">검색</button>
+      <button class="search-button" onclick="search_movie()">검색</button>
+
     </nav>
     <style>
+      header {
+        display: flex;
+        justify-content: center;
+      }
+
       #nav {
         background-color: aquamarine;
         font-size: 40px;
         text-align: center;
         padding: 10px 0;
+        width: 1400px;
+        padding: 40px;
+        background-image: url("https://img.freepik.com/free-vector/realistic-vector-icon-film-tape-strip-with-white-square-isolated-on-white-cinema-concept_134830-1383.jpg?q=10&h=200");
+
       }
 
-      #nav>h1 {
+      #nav>div>a {
         margin-bottom: 0;
+        text-decoration: none;
+        color: white;
+        font-weight: 700;
+        font-size: 60px;
+      }
+
+      .transparent {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px
       }
 
       #search {
