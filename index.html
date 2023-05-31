@@ -138,7 +138,6 @@
     fetch(`https://api.themoviedb.org/3/movie/${id}?language=ko`, options)
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         let poster = data['poster_path'];
         let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
         let title = data['title'];
