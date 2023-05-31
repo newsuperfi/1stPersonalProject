@@ -12,7 +12,8 @@
   <header>
     <div>
       <div class="transparent">
-        <a href="./index.html">환장함피디아</a><br>
+        <!-- 타이틀을 클릭 시 메인페이지로 이동 -->
+        <a href="./index.html">환장함피디아</a><br> 
       </div>
       <!-- input 태그에 autofocus 적용으로, 페이지 로드 시 자동으로 검색창에 커서 위치 -->
       <input id="keyword" type="text" placeholder="검색할 영화 제목을 입력하세요" autofocus>
@@ -27,10 +28,6 @@
       </div>
     </section>
   </main>
-  <style>
-
-  </style>
-  <footer> </footer>
 </body>
 <script defer>
 
@@ -71,7 +68,7 @@
           let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
           // img 태그에는 이미지 클릭 시 해당 영화의 id를 alert해주는 onClick이벤트 추가
           temp_html = temp_html + `<div class="movie-content">
-                             <img src="${poster_path}" onClick="alert('id: ${id}')" id="movie-poster">
+                             <img src="${poster_path}" onclick="show_details('${id}')" id="movie-poster">
                              <div class="movie-title">${title}</div>
                              <div class="movie-vote">rate : ${vote}</div>
                              <div class="movie-overview">${overview}</div>
@@ -117,7 +114,7 @@
           let poster = result['poster_path'];
           let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
           temp_html = temp_html + `<div class="movie-content">
-                             <img src="${poster_path}" onClick="alert('id: ${id}')" id="movie-poster">
+                             <img src="${poster_path}" onclick="show_details('${id}')" id="movie-poster">
                              <div class="movie-title">${title}</div>
                              <div class="movie-vote">rate : ${vote}</div>
                              <div class="movie-overview">${overview}</div>
@@ -127,9 +124,51 @@
       .catch(err => console.error(err));
   }
 
+  const show_details = (id) => {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZDI3NmJkYThlZWUwZmVhN2I0OTdlZTQ4OGVjNzEzMCIsInN1YiI6IjY0NzBhNzQwMTNhMzIwMDExNmI2YTM2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LJEjOT1v4yDJH6Twg5KPID8YCFIrHQrsJ6Py-U9XqpU'
+      }
+    };
+
+    const movie_list = document.querySelector('.movie-list');
+
+    fetch(`https://api.themoviedb.org/3/movie/${id}?language=ko`, options)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        let poster = data['poster_path'];
+        let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
+        let title = data['title'];
+        let release = data['release_date'];
+        let tagline = data['tagline'];
+        let runtime = data['runtime'];
+        let vote = data['vote_average'];
+        let overview = data['overview'];
+
+        let temp_html = `<div id="movie-details">
+                          <img src="${poster_path}" id="movie-poster">
+                          <div>
+                            <div class="movie-title">${title}</div>
+                            <div id="tagline">${tagline}</div>
+                            <div id="release">
+                              <span>개봉 : ${release}</span> <span>상영시간 : ${runtime}분</span>
+                            </div>
+                            <div class="movie-vote">rate : ${vote}</div>
+                            <div class="movie-overview">${overview}</div>
+                          </div>
+                        </div>`
+        movie_list.innerHTML = temp_html
+      })
+      .catch(err => console.error(err));
+  }
+
+
   // keyup 이벤트 발생시 사용 할 이벤트핸들러
+  // Eneter의 keyCode는 13
   const on_key_up = (event) => {
-    console.log(event.keyCode)
     if (event.keyCode === 13) search_movie();
   }
 

@@ -69,6 +69,18 @@ section {
   border-radius: 10px;
 }
 
+#movie-details {
+  background-color: lightgray;
+  width: 1200px;
+  height: 820px;
+  margin: 20px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+}
+
 #movie-poster {
   margin: 50px 50px 0 50px;
   border-radius: 10px;
@@ -92,4 +104,42 @@ section {
 .movie-overview {
   height: 150px;
   overflow: auto;
+}
+
+
+#movie-details #movie-poster {
+  margin: 50px;
+}
+
+#movie-details div {
+  margin: 20px 20px 20px 0;
+}
+
+#movie-details #release {
+  display: flex;
+  justify-content:space-around;
+}
+
+#movie-details #tagline {
+  font-size: 24px;
+  font-style: italic;
+  margin-bottom: 50px;
+}
+
+#movie-details .movie-title {
+  font-size: 50px;
+  height: 120px;
+  margin: 50px 20px 50px 20px;
+}
+
+#movie-details .movie-vote {
+  text-align: right;
+  padding: 0 20 10 0;
+  margin: 0;
+}
+
+#movie-details .movie-overview {
+  height: 400px;
+  margin: 10px;
+  padding: 10px;
 }
