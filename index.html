@@ -5,213 +5,137 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>스파르타피디야ㅑㅑㅑ</title>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      show_popular();
-    });
-
-    const show_popular = () => {
-      const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZDI3NmJkYThlZWUwZmVhN2I0OTdlZTQ4OGVjNzEzMCIsInN1YiI6IjY0NzBhNzQwMTNhMzIwMDExNmI2YTM2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LJEjOT1v4yDJH6Twg5KPID8YCFIrHQrsJ6Py-U9XqpU'
-        }
-      };
-      const movie_list = document.querySelector('.movie-list');
-
-      fetch('https://api.themoviedb.org/3/movie/popular?language=ko&page=1', options)
-        .then(res => res.json())
-        .then(data => {
-          results = data['results']
-          console.log(results)
-          console.log(results[1])
-          let temp_html = '';
-
-          results.forEach((result, i) => {
-            let id = result['id']
-            let title = result['title'];
-            let overview = result['overview'];
-            let vote = result['vote_average']
-            let poster = result['poster_path'];
-            let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
-            temp_html = temp_html + `<div class="movie-content">
-                             <img src="${poster_path}" onClick="alert('id: ${id}')" id="movie-poster">
-                             <div class="movie-title">${title}</div>
-                             <div class="movie-vote">rate : ${vote}</div>
-                             <div class="movie-overview">${overview}</div>
-                             </div>`})
-          movie_list.innerHTML = temp_html
-        })
-        .catch(err => console.error(err));
-    }
-
-    const search_movie = () => {
-
-      let search_keyword = document.querySelector('#keyword').value;
-
-      const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZDI3NmJkYThlZWUwZmVhN2I0OTdlZTQ4OGVjNzEzMCIsInN1YiI6IjY0NzBhNzQwMTNhMzIwMDExNmI2YTM2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LJEjOT1v4yDJH6Twg5KPID8YCFIrHQrsJ6Py-U9XqpU'
-        }
-      };
-
-      const movie_list = document.querySelector('.movie-list');
-
-      fetch(`https://api.themoviedb.org/3/search/movie?query=${search_keyword}&include_adult=true&language=ko&page=1`, options)
-        .then(res => res.json())
-        .then(data => {
-          results = data['results']
-          console.log(results)
-          console.log(results[1])
-          let temp_html = '';
-
-          results.forEach((result, i) => {
-            let id = result['id']
-            let title = result['title'];
-            let overview = result['overview'];
-            let vote = result['vote_average']
-            let poster = result['poster_path'];
-            let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
-            temp_html = temp_html + `<div class="movie-content">
-                             <img src="${poster_path}" onClick="alert('id: ${id}')" id="movie-poster">
-                             <div class="movie-title">${title}</div>
-                             <div class="movie-vote">rate : ${vote}</div>
-                             <div class="movie-overview">${overview}</div>
-                             </div>`})
-          movie_list.innerHTML = temp_html
-        })
-        .catch(err => console.error(err));
-    }
-
-    const sckw = document.querySelector('#keyword')
-
-    sckw.addEventListener('keyup', function (event) {
-      console.log(event.keycode)
-      if (event.keycode === 13) {
-        search_movie();
-      }
-    })
-    // const on_key_up = (e) => {
-    //   console.log(e)
-    //   if (e.key === 'Enter') {
-    //     search_movie();
-    //   }
-    // }
-
-
-  </script>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
   <header>
-    <nav id="nav">
+    <div>
       <div class="transparent">
         <a href="./index.html">환장함피디아</a><br>
       </div>
-      <input id="keyword" type="text" placeholder="검색하기">
+      <!-- input 태그에 autofocus 적용으로, 페이지 로드 시 자동으로 검색창에 커서 위치 -->
+      <input id="keyword" type="text" placeholder="검색할 영화 제목을 입력하세요" autofocus>
+      <!-- 버튼 클릭 시 input태그의 내용으로 검색하는 search_movie함수 실행 -->
       <button class="search-button" onclick="search_movie()">검색</button>
-
-    </nav>
-    <style>
-      header {
-        display: flex;
-        justify-content: center;
-      }
-
-      #nav {
-        background-color: aquamarine;
-        font-size: 40px;
-        text-align: center;
-        padding: 10px 0;
-        width: 1400px;
-        padding: 40px;
-        background-image: url("https://img.freepik.com/free-vector/realistic-vector-icon-film-tape-strip-with-white-square-isolated-on-white-cinema-concept_134830-1383.jpg?q=10&h=200");
-
-      }
-
-      #nav>div>a {
-        margin-bottom: 0;
-        text-decoration: none;
-        color: white;
-        font-weight: 700;
-        font-size: 60px;
-      }
-
-      .transparent {
-        background-color: rgba(0, 0, 0, 0.8);
-        padding: 20px
-      }
-
-      #search {
-        margin-bottom: 40px;
-        height: 30px;
-        width: 300px;
-      }
-    </style>
-    <script>
-      function search(event) {
-
-      }
-    </script>
+    </div>
   </header>
   <main>
     <section>
       <div class="movie-list">
+        <!-- 영화목록이 innerHTML을 통해 들어올 부분 -->
       </div>
     </section>
   </main>
   <style>
-    section {
-      display: flex;
-      justify-content: center;
-    }
 
-    .movie-list {
-      display: flex;
-      justify-content: space-evenly;
-      max-width: 1400px;
-      flex-wrap: wrap;
-    }
-
-    .movie-content {
-      background-color: lightgray;
-      width: 400px;
-      height: 820px;
-      margin: 20px;
-      text-align: center;
-      font-size: 20px;
-      border-radius: 10px;
-    }
-
-    #movie-poster {
-      margin: 50px 50px 0 50px;
-      border-radius: 10px;
-    }
-
-    .movie-title {
-      height: 80px;
-      font-size: 23px;
-      font-weight: 700;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .movie-vote {
-      text-align: right;
-      padding: 0 20 10 0;
-      margin: 0;
-    }
-
-    .movie-overview {
-      height: 150px;
-      overflow: auto;
-    }
   </style>
   <footer> </footer>
 </body>
+<script defer>
+
+  // 페이지 로드 완료 시 show_popular 함수를 통해 인기 영화 리스트를 불러와서 화면에 띄워주는 코드
+  document.addEventListener("DOMContentLoaded", () => {
+    show_popular();
+  });
+
+
+  //인기 영화 목록을 불러오는 함수
+  const show_popular = () => {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZDI3NmJkYThlZWUwZmVhN2I0OTdlZTQ4OGVjNzEzMCIsInN1YiI6IjY0NzBhNzQwMTNhMzIwMDExNmI2YTM2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LJEjOT1v4yDJH6Twg5KPID8YCFIrHQrsJ6Py-U9XqpU'
+      }
+    };
+
+    //영화 데이터가 담길 div태그를 상수에 할당
+    const movie_list = document.querySelector('.movie-list');
+
+    fetch('https://api.themoviedb.org/3/movie/popular?language=ko&page=1', options)
+      .then(res => res.json())
+      .then(data => {
+        results = data['results']
+
+        // innerHTML는 여러번 반복할 경우 이전에 삽입했던 내용이 사라지기 때문에
+        // temp_html을 외부에서 선언한 후, 본문에 삽입할 내용을 temp_html에 모두 모아주고 나서
+        // 반복이 모두 끝난 후 한번에 내용물 삽입
+        let temp_html = '';
+        results.forEach((result, i) => {
+          let id = result['id']
+          let title = result['title'];
+          let overview = result['overview'];
+          let vote = result['vote_average']
+          let poster = result['poster_path'];
+          let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
+          // img 태그에는 이미지 클릭 시 해당 영화의 id를 alert해주는 onClick이벤트 추가
+          temp_html = temp_html + `<div class="movie-content">
+                             <img src="${poster_path}" onClick="alert('id: ${id}')" id="movie-poster">
+                             <div class="movie-title">${title}</div>
+                             <div class="movie-vote">rate : ${vote}</div>
+                             <div class="movie-overview">${overview}</div>
+                             </div>`})
+        // 반복문이 종료된 이후 innerHTML에 모아진 내용물을 <div class='.movie-list'> 내부에 넣어줌
+        movie_list.innerHTML = temp_html
+      })
+      .catch(err => console.error(err));
+  }
+
+  // 영화 검색기능 함수
+  const search_movie = () => {
+
+    // 검색할 영화 제목을 query string으로 서버로 전송해야 하기 때문에, 
+    // query에 영화 제목을 담기 위해 상수로 선언 후 input태그 속의 값을 할당해줌
+    // 할당한 경로?가 바뀔 일은 없기 떄문에 변수 대신 상수로 선언
+    const search_keyword = document.querySelector('#keyword').value;
+
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZDI3NmJkYThlZWUwZmVhN2I0OTdlZTQ4OGVjNzEzMCIsInN1YiI6IjY0NzBhNzQwMTNhMzIwMDExNmI2YTM2MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LJEjOT1v4yDJH6Twg5KPID8YCFIrHQrsJ6Py-U9XqpU'
+      }
+    };
+    // 인기영화목록 불러오기와 같음
+    const movie_list = document.querySelector('.movie-list');
+
+    //검색할 영화 제목을 query string으로 url에 담아서 서버로 전송
+    fetch(`https://api.themoviedb.org/3/search/movie?query=${search_keyword}&include_adult=true&language=ko&page=1`, options)
+      .then(res => res.json())
+      .then(data => {
+        results = data['results']
+
+        //인기영화목록 불러오기와 같음
+        let temp_html = '';
+
+        results.forEach((result, i) => {
+          let id = result['id']
+          let title = result['title'];
+          let overview = result['overview'];
+          let vote = result['vote_average']
+          let poster = result['poster_path'];
+          let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
+          temp_html = temp_html + `<div class="movie-content">
+                             <img src="${poster_path}" onClick="alert('id: ${id}')" id="movie-poster">
+                             <div class="movie-title">${title}</div>
+                             <div class="movie-vote">rate : ${vote}</div>
+                             <div class="movie-overview">${overview}</div>
+                             </div>`})
+        movie_list.innerHTML = temp_html
+      })
+      .catch(err => console.error(err));
+  }
+
+  // keyup 이벤트 발생시 사용 할 이벤트핸들러
+  const on_key_up = (event) => {
+    console.log(event.keyCode)
+    if (event.keyCode === 13) search_movie();
+  }
+
+  // keyword라는 id를 갖고있는 input태그에 keyup 이벤트 발생 시 사용할 이벤트핸들러 on_key_up 할당
+  document.querySelector('#keyword').addEventListener('keyup', on_key_up)
+
+</script>
 
 </html>
