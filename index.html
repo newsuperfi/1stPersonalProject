@@ -124,6 +124,9 @@
       .catch(err => console.error(err));
   }
 
+  // 영화 상세 페이지 정보 제공 함수
+  // 라우터 구성이 되어있지 않기때문에 페이지 내의 데이터를 갈아 끼우는 방식으로 구현
+  // 따라서 새로고침 시 첫 화면으로 이동, 뒤로가기 불가
   const show_details = (id) => {
     const options = {
       method: 'GET',
