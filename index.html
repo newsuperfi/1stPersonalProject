@@ -23,7 +23,7 @@
   </header>
   <main>
     <section>
-      <div class="movie-list">
+      <div id="movie-list">
         <!-- 영화목록이 innerHTML을 통해 들어올 부분 -->
       </div>
     </section>
@@ -48,7 +48,7 @@
     };
 
     //영화 데이터가 담길 div태그를 상수에 할당
-    const movie_list = document.querySelector('.movie-list');
+    const movie_list = document.querySelector('#movie-list');
 
     fetch('https://api.themoviedb.org/3/movie/popular?language=ko&page=1', options)
       .then(res => res.json())
@@ -73,7 +73,7 @@
                              <div class="movie-vote">rate : ${vote}</div>
                              <div class="movie-overview">${overview}</div>
                              </div>`})
-        // 반복문이 종료된 이후 innerHTML에 모아진 내용물을 <div class='.movie-list'> 내부에 넣어줌
+        // 반복문이 종료된 이후 innerHTML에 모아진 내용물을 <div id='#movie-list'> 내부에 넣어줌
         movie_list.innerHTML = temp_html
       })
       .catch(err => console.error(err));
@@ -95,7 +95,7 @@
       }
     };
     // 인기영화목록 불러오기와 같음
-    const movie_list = document.querySelector('.movie-list');
+    const movie_list = document.querySelector('#movie-list');
 
     //검색할 영화 제목을 query string으로 url에 담아서 서버로 전송
     fetch(`https://api.themoviedb.org/3/search/movie?query=${search_keyword}&include_adult=true&language=ko&page=1`, options)
@@ -136,7 +136,7 @@
       }
     };
 
-    const movie_list = document.querySelector('.movie-list');
+    const movie_list = document.querySelector('#movie-list');
 
     fetch(`https://api.themoviedb.org/3/movie/${id}?language=ko`, options)
       .then(res => res.json())

@@ -52,7 +52,7 @@ section {
   justify-content: center;
 }
 
-.movie-list {
+#movie-list {
   display: flex;
   justify-content: space-evenly;
   max-width: 1400px;
@@ -103,6 +103,8 @@ section {
 
 .movie-overview {
   height: 150px;
+  padding: 15px;
+  font-size: 18px;
   overflow: auto;
 }
 
