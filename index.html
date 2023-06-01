@@ -59,12 +59,12 @@
           let overview = result['overview'];
           let vote = result['vote_average']
           let poster = result['poster_path'];
-          let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
+          let poster_path = 'https://image.tmdb.org/t/p/w400' + poster
           // img 태그에는 이미지 클릭 시 해당 영화의 id를 alert해주는 onClick이벤트 추가
           return `<div class="movie-content">
                            <img src="${poster_path}" onclick="show_details('${id}')" id="movie-poster">
                            <div class="movie-title">${title}</div>
-                           <div class="movie-vote">rate : ${vote}</div>
+                           <div class="movie-vote">평점 : ${vote}</div>
                            <div class="movie-overview">${overview}</div>
                            </div>`})
         // join 메서드로 배열의 내용물을 문자열로 모아줌
@@ -106,7 +106,7 @@
           let overview = result['overview'];
           let vote = result['vote_average']
           let poster = result['poster_path'];
-          let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
+          let poster_path = 'https://image.tmdb.org/t/p/w400' + poster
           temp_html = temp_html + `<div class="movie-content">
                              <img src="${poster_path}" onclick="show_details('${id}')" id="movie-poster">
                              <div class="movie-title">${title}</div>
