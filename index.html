@@ -16,7 +16,7 @@
         <a href="./index.html">환장함피디아</a><br>
       </div>
       <!-- input 태그에 autofocus 적용으로, 페이지 로드 시 자동으로 검색창에 커서 위치 -->
-      <input id="keyword" type="text" placeholder="전체 데이터에서 영화를 검색합니다." autofocus>
+      <input id="keyword" type="text" placeholder="검색하실 영화를 입력해주세요." autofocus>
       <!-- 버튼 클릭 시 input태그의 내용으로 검색하는 search_movie함수 실행 -->
       <button class="search-button" onclick="search_movie()">검색</button>
     </div>
@@ -52,7 +52,7 @@
       .then(res => res.json())
       .then(data => {
         movies = data['results']
-        
+
         let temp_html = movies.map((result, i) => {
           let id = result['id']
           let title = result['title'];
