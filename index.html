@@ -13,10 +13,10 @@
     <div>
       <div class="transparent">
         <!-- 타이틀을 클릭 시 메인페이지로 이동 -->
-        <a href="./index.html">환장함피디아</a><br> 
+        <a href="./index.html">환장함피디아</a><br>
       </div>
       <!-- input 태그에 autofocus 적용으로, 페이지 로드 시 자동으로 검색창에 커서 위치 -->
-      <input id="keyword" type="text" placeholder="검색할 영화 제목을 입력하세요" autofocus>
+      <input id="keyword" type="text" placeholder="전체 데이터에서 영화를 검색합니다." autofocus>
       <!-- 버튼 클릭 시 input태그의 내용으로 검색하는 search_movie함수 실행 -->
       <button class="search-button" onclick="search_movie()">검색</button>
     </div>
@@ -36,8 +36,6 @@
     show_popular();
   });
 
-
-  //인기 영화 목록을 불러오는 함수
   const show_popular = () => {
     const options = {
       method: 'GET',
@@ -53,13 +51,9 @@
     fetch('https://api.themoviedb.org/3/movie/popular?language=ko&page=1', options)
       .then(res => res.json())
       .then(data => {
-        results = data['results']
-
-        // innerHTML는 여러번 반복할 경우 이전에 삽입했던 내용이 사라지기 때문에
-        // temp_html을 외부에서 선언한 후, 본문에 삽입할 내용을 temp_html에 모두 모아주고 나서
-        // 반복이 모두 끝난 후 한번에 내용물 삽입
-        let temp_html = '';
-        results.forEach((result, i) => {
+        movies = data['results']
+        
+        let temp_html = movies.map((result, i) => {
           let id = result['id']
           let title = result['title'];
           let overview = result['overview'];
@@ -67,21 +61,21 @@
           let poster = result['poster_path'];
           let poster_path = 'https://image.tmdb.org/t/p/w300' + poster
           // img 태그에는 이미지 클릭 시 해당 영화의 id를 alert해주는 onClick이벤트 추가
-          temp_html = temp_html + `<div class="movie-content">
-                             <img src="${poster_path}" onclick="show_details('${id}')" id="movie-poster">
-                             <div class="movie-title">${title}</div>
-                             <div class="movie-vote">rate : ${vote}</div>
-                             <div class="movie-overview">${overview}</div>
-                             </div>`})
+          return `<div class="movie-content">
+                           <img src="${poster_path}" onclick="show_details('${id}')" id="movie-poster">
+                           <div class="movie-title">${title}</div>
+                           <div class="movie-vote">rate : ${vote}</div>
+                           <div class="movie-overview">${overview}</div>
+                           </div>`})
+        // join 메서드로 배열의 내용물을 문자열로 모아줌
         // 반복문이 종료된 이후 innerHTML에 모아진 내용물을 <div id='#movie-list'> 내부에 넣어줌
-        movie_list.innerHTML = temp_html
+        movie_list.innerHTML = temp_html.join('');
       })
       .catch(err => console.error(err));
   }
 
   // 영화 검색기능 함수
   const search_movie = () => {
-
     // 검색할 영화 제목을 query string으로 서버로 전송해야 하기 때문에, 
     // query에 영화 제목을 담기 위해 상수로 선언 후 input태그 속의 값을 할당해줌
     // 할당한 경로?가 바뀔 일은 없기 떄문에 변수 대신 상수로 선언
@@ -123,6 +117,7 @@
       })
       .catch(err => console.error(err));
   }
+
 
   // 영화 상세 페이지 정보 제공 함수
   // 라우터 구성이 되어있지 않기때문에 페이지 내의 데이터를 갈아 끼우는 방식으로 구현
